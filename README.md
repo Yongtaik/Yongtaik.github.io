@@ -22,8 +22,6 @@
 
 ### 사용 모델: CRNN이란?
 ![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/3f1b66b8-2e44-4ae7-aa53-77ce7b2f2143)
-![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/3f1b66b8-2e44-4ae7-aa53-77ce7b2f2143)
-
 CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network)과 RNN(Recurrent Neural Network)의 장점을 결합한 신경망의 한 유형입니다. CRNN은 먼저 CNN을 활용하여 이미지나 스펙트로그램과 같은 입력 데이터에서 공간적 특징을 계층적으로 추출합니다. 이렇게 추출된 특징을 RNN이 순차적으로 처리하여 시간적 종속성을 캡처함으로써, 시간에 따른 연속적인 정보를 효과적으로 다룰 수 있습니다. 이 아키텍처는 두가지 모델을 결합한만큼 지역적 특징 패턴과 장기적인 종속성을 모두 학습할 수 있다는 점에서 유리합니다. CRNN은 특히 음성 및 오디오 처리와 같은 응용 분야에서 사용되며, 입력 신호의 공간적 및 시간적 특성을 모델링하여 음성 향상과 같은 작업에서 음성의 명료성과 품질을 향상시키는 데 효과적입니다
 
 
