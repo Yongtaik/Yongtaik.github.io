@@ -7,7 +7,7 @@
 경영학과 구현태 kht999123@gmail.com
 
 경영학과 유영찬 reynoldred@hanyang.ac.kr
-/n전기공학과 최태환 middler@hanyang.ac.kr
+전기공학과 최태환 middler@hanyang.ac.kr
 
 
 ## Index
