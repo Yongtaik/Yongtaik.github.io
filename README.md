@@ -29,10 +29,10 @@ CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network
 ### 데이터셋 상세
 총 용량 540MB, 3초 내외의 짧은 영어 음성 데이터. clean_sound(고음질), mixed_sound(저음질) 각각 1132개의 음성 파일로 구성되어 있습니다. 저음질과 고음질 데이터는 1대1로 대응되기 때문에 저음질 데이터를 입력받은 모델의 출력물이 고음질 데이터와 얼마나 일치하는지 비교하여 훈련의 성과를 판단할 수 있습니다.
 
-## 3. Methology
+## 3. Methodology
 
 
-## 4.Evaluation & Analysis
+## 4. Evaluation & Analysis
 
 
 ## 5. Conclusion
