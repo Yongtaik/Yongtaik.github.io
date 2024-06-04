@@ -1,5 +1,5 @@
 # AIX:DeepLearning Project
-# Title: CRNN(CNN+RNN)을 활용한 영어 대화 중 소음 제거 및 음질 향상
+# Title: CNN-RNN 하이브리드 모델을 이용한 보이스 노이즈 제거 및 음질 향상
 
 # Members & Roles
 자원환경공학과 최용석 cys425922@gmail.com   
