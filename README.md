@@ -47,6 +47,7 @@ SNR은 노이즈 합성 비율을 결정하기 위한 음성과 노이즈의 대
 A<sub>signal</sub>와 A<sub>noise</sub>는 wav파일의 진폭의 제곱합의 평균의 제곱근을 나타낸 RMS(평균 제곱근)값입니다.
 SNR 값을 입력하여 위의 식에서 도출된 아래의 식을 이용해 노이즈의 RMS를 구합니다. 
 </br>
+</br>
 <img width="304" alt="스크린샷 2024-06-15 오전 4 26 12" src="https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/c52ef434-b406-4e44-9518-a9354d528e0b">
 </br>
 </br>
