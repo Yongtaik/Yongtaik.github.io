@@ -23,7 +23,7 @@
 
 
 ## 2.Datasets
-잡음 제거 학습을 위해 노이즈가 있는 음성과 노이즈가 없는 클린한 음성의 데이터가 쌍으로 필요합니다. 하지만 이러한 데이터 쌍을 구하기 쉽지 않기 때문에 두가지 음성을 합성하여 데이터 쌍을 만드는 방식을 사용했습니다. 음성데이터는 CMU ARCTIC Databases의 영어로 된 남자와 여자 음성파일(wav) 407개를 사용하였고 노이즈는 DEMAND의 서로 다른 종류인 생활 소음의 파일(wav) 5개를 사용하고 소음이 들어간 정도인 SNR(음성 대비 노이즈 비)을 3가지로 나누어 총 407X5X3(6105)개의 노이즈가 섞인 음성 데이터를 만들었습니다. 
+잡음 제거 학습을 위해 노이즈가 있는 음성과 노이즈가 없는 클린한 음성의 데이터가 쌍으로 필요합니다. 하지만 이러한 데이터 쌍을 구하기 쉽지 않기 때문에 두가지 음성을 합성하여 데이터 쌍을 만드는 방식을 사용했습니다. 데이터 합성 방식은 https://engineering.linecorp.com/ko/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python 를 참조하였습니다. 음성데이터는 CMU ARCTIC Databases의 영어로 된 남자와 여자 음성파일(wav) 407개를 사용하였고 노이즈는 DEMAND의 서로 다른 종류인 생활 소음의 파일(wav) 5개를 사용하고 소음이 들어간 정도인 SNR(음성 대비 노이즈 비)을 3가지로 나누어 총 407X5X3(6105)개의 노이즈가 섞인 음성 데이터를 만들었습니다. 
 
 아래의 그림은 데이터 만드는 전체 과정을 나타냈습니다.
 </br>
@@ -35,8 +35,8 @@ speech_synthesis.py는 음성을 노이즈를 SNR을 다르게 하여 노이즈�
 </br>
 </br>
 </br>
-### speech_synthesis.py
-SNR은 음성과 노이즈의 합성할 정도를 말하며 식은 다음과 같습니다. 
+### SNR
+SNR은 노이즈 합성 비율을 결정하기 위한 음성과 노이즈의 대비값을 말하며 식은 다음과 같습니다. 
 </br>
 </br>
 <img width="381" alt="image" src="https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/aa161b58-f87b-4277-be50-0e9d57686681">
@@ -64,7 +64,7 @@ SNR값을 이용하여 구한 노이즈와 원본 노이즈의 비율을 아래�
 </br>
 </br>
 ### 데이터셋 상세 
-CMU ARCTIC Databases의 5초 이내의 남자 영어 목소리 203개와 여자목소리 204개를 음성 데이터로 사용하여 407개의 클린한 음성 데이터를 train, valid, test로 나눠서 speech_synthesis.py에서 DEMAND의 5분 길이의 5가지의 생활 소음(식당소리, 음악소리, 세탁기, 운동장소리, 공원소리)을 SNR 값을 15, 20, 25으로 3가지 값을 주었습니다. 데이터 셋의 분포는 아래와 같습니다.
+CMU ARCTIC Databases의 5초 이내의 남자 영어 목소리 203개와 여자목소리 204개를 음성 데이터로 사용하여 407개의 클린한 음성 데이터를 train(300개), valid(99개), test(8개)로 나눠서 speech_synthesis.py에서 DEMAND의 5분 길이의 5가지의 생활 소음(식당소리, 음악소리, 세탁기, 운동장소리, 공원소리)을 SNR 값을 15, 20, 25으로 3가지 값으로 합성하여 데이터를 만들었습니다. 데이터 셋의 분포는 아래와 같습니다.
 </br>
 </br>
 train set : 4500개
@@ -94,4 +94,5 @@ CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network
 
 
 ## 6. Reference
+* https://engineering.linecorp.com/ko/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python
 * Kumar, A., Florêncio, D., & Zhang, C. (2015). Linear Prediction Based Speech Enhancement without Delay. arXiv preprint arXiv:1507.05717. Retrieved from https://arxiv.org/abs/1507.05717
