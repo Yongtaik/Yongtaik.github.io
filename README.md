@@ -550,19 +550,70 @@ https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/017aee8a-a4a9-4e
 <br>
 
 Evaluation Metric으로는 PESQ를 사용합니다. PESQ 스코어는 -0.5 ~ 4.5 범위의 값을 출력하며, 두 가지 소리가 얼마나 서로 유사한지를 가리킵니다. 높은 값일수록 두 소리가 유사하다고 할 수 있습니다. 저희는 PESQ 스코어에서 Wideband PESQ를 사용합니다. test셋을 사용하여 Average PESQ 스코어를 출력합니다.
-
+> PESQ 스코어 개념 및 알고리즘 출처[[7]](#7-ktword-정보통신기술용어-해설-httpwwwktwordcokrtestviewviewphpno2751)[[8]](#8-httpsgithubcomludlowspesq)
 
 
 
 ```python
+import torch
+import numpy as np
+import librosa
+from pesq import pesq
+from pesq import PesqError
+def evaluate_pesq(model, batch_mixed, batch_clean, device, sampling_rate=sampling_rate):
+    model.eval()
+    pesq_scores = []
 
+    with torch.no_grad():
+        for i in range(1):
+            # Forward pass
+            mixed_amp_spt = batch_mixed[i]  
+            clean_amp_spt = batch_clean[i]  
+            prediction_amp_spt = model(mixed_amp_spt.permute(0,2,1)).permute(0, 2, 1).cpu().numpy()
+            mixed_audio = mixed_amp_spt.cpu().numpy()
+            mixed_phase = batches_mixed_phase[i]
+            for j in range(batch_size):
+                predicted_audio = istft(prediction_amp_spt[j], mixed_phase[j])
+                clean_audio = istft(clean_amp_spt[j].cpu().numpy(), batches_clean_phase[0][j])
+
+                try:
+                    pesq_score = pesq(sampling_rate, clean_audio, predicted_audio, mode='wb')
+                    pesq_scores.append(pesq_score)
+                except PesqError as e:
+                    print(f"Error calculating PESQ score: {e}")
+                    pesq_scores.append(None)
+
+    return np.array(pesq_scores)
+device = "cuda"
+batch_mixed = torch.from_numpy(batches_mixed_amp_test).to(device)
+batch_clean = torch.from_numpy(batches_clean_amp_test).to(device)
+pesq_scores = evaluate_pesq(model, batch_mixed, batch_clean, device)
+average_pesq = np.mean([score for score in pesq_scores if score is not None])
+
+print(f"Average PESQ score: {average_pesq}")
 ```
+<br>
+![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/dbb49d0d-cfc6-489e-be84-cddca09bc081)
+<br>
 
+**최종 PESQ Score: 3.034**
 <br>
 <br>
 <br>
 
 ## 5. Conclusion
+
+**결론 및 한계**
+<br>
+출력된 아웃풋을 들어볼 때, 시각적으론 괜찮은 것 같아도 노이즈가 들리는 듯한 뉘앙스를 받는 경우가 많습니다. 최신 노이즈 제거 모델을 살펴보면, 저희처럼 Phase Spectrogram을 모델 인풋에서 획득하여 사용하는 것이 아닌 것들도 존재합니다. 저희의 모델은 Amplitude Spectrogram만을 예측하여 Predict 하므로 모델 학습이 매우 잘되어도 PESQ 스코어를 올릴 수 있는 한계가 명확히 존재합니다. 따라서 Phase Spectrogram을 Amplitude Spectrogram과 함께 예측하거나, 보정된 형태를 사용할 수 있는 방법을 쓰거나, Waveforms 그 자체에서 모델 예측을 하는 등의 시도를 해볼 수 있을 것입니다. 그것을 고려하고자 한다면, 모델의 파라미터수가 매우 높아질 확률이 크다 할 수 있습니다. 저희가 구현한 모델은 실시간과 같이 현실적인 상황을 가정했을 때, 인퍼런스 속도가 매우 빠르기 때문에 쉽게 적용해볼 수 있는 모델이란 점에서 의의가 있다고 생각합니다. 
+모델을 학습하기 앞서 오디오의 전처리를 어떻게 할 것인가는 중요한 문제일 것입니다. 저희는 통상적인 FFT length와 Hop_length를 바로 사용하기 보단, 직접 data를 시각화하여 실제 모델이 어떻게 정보를 받아들일 수 있을지 판단해보고 전처리 조건을 바꾸어 적용시켰습니다. 샘플레이트 환경은 16000으로 주어졌습니다. Nyquist 이론에 따르면 샘플레이트가 16000일 때 표현할 수 있는 최대 주파수는 8000hz 까지입니다. 이는 사람의 음성이 담고 있는 정보를 전부 담을 수 있다고 말하긴 어렵습니다. 샘플레이트가 가청 주파수를 모두 표현할 수 있는 44100 등으로 훈련한다면 음악에 사용하고자 보컬 녹음 등에도 사용이 가능해질 것 입니다.
+저희는 MSE LOSS 를 사용하였으나, 미분가능한 PESQ나 si sdr, LMS 등 다양한 로스가 존재합니다. MSE LOSS는 현재 음성 분야에선 한계가 지적되어 최신 모델에선 다른 Loss를 사용하는 추세인 것을 확인하였으며 성능적 지표가 비교적 떨어지는 것을 Hwang et al. 을 참고해 확인했습니다. Loss를 바꾸는 것이 청취적 평가인 정성적으로도, PESQ metric의 정량적으로도 우수해질 수 있으리라 판단했습니다.
+모델의 아웃풋을 이미지로 도시할 때, 일반적으로 오른쪽 끝부분이 음성의 존재와 무관하게 지워지는 현상이 있다는 것을 파악했습니다.
+ 
+왼쪽의 이미지는 모델을 통해 predict한 Amplitude Spectrogram입니다. 우측의 실제 ground truth의 3.5초 부근에서 엄연히 음성 신호가 존재함을 볼 수 있으나, 왼쪽의 이미지는 이를 제거한 모습입니다. 여기엔 다양한 문제가 있겠지만 깃허브의 speech enhancement 관련 여러 이슈를 찾아본 결과, 모델 외적으로는 데이터셋이 작고 쉽게 오버피팅 할 수 있는 구조일 때 음성을 제거하는 경향이 있다고 합니다. 저희는 굉장히 작은 데이터셋으로 테스트하였고, 음성과 노이즈가 다양한 조합을 갖고 있지 않습니다. 데이터셋의 한계를 극복하기 위해서 SpecAugment(Park, Daniel S., et al.) 등의 오디오 데이터 어그멘테이션 기법을 사용하는 것이 좋을 것으로 생각합니다. 
+저희는 Validation 부분을 따로 만들지 않았는데, 위에서 서술한 이유입니다. 작은 데이터셋을 사용하기 때문에 트레이닝 에포크가 높지 않고 러닝 레이트 또한 낮을 때 좋은 성능을 내는 경향이 있었고, 저희가 사용했던 Loss에 대한 신뢰도가 낮기 때문입니다. 만약 SpecAugment를 사용하고 Loss 를 변경한다면 Validation을 만들어 validation에 대한 pesq나 loss를 기준으로 트레이닝을 중단하는 반복문을 통해 학습시키는 것이 바람직합니다. 
+마지막으로 음성을 저희가 4초 길이로 모두 잘라서 사용했기에, 모델 또한 여기에 맞추어져 설계되었습니다. 하지만 파이토치의 LSTM은 인풋 시퀀스의 타임 스텝에 상관없이 적용이 가능합니다. 따라서 이 모델의 인퍼런스는 오디오의 길이가 달라지더라도 작동하기에 간편한 사용이란 장점이 있습니다. 쉽고 가볍게 사용할 수 있는 고성능 AI 모델이란 지향성을 잘 보여주고 있다고 생각합니다.
+
 
 
 ## 6. Reference
