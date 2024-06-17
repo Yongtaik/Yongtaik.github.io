@@ -546,7 +546,7 @@ https://github-production-user-asset-6210df.s3.amazonaws.com/168409733/340231610
 predicted_audio_1.mp4: 모델을 통과한 결과물입니다
 <br>
 
-<video>https://github-production-user-asset-6210df.s3.amazonaws.com/168409733/340231630-017aee8a-a4a9-4ef6-8e6c-1dd4cd968a34.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240617%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240617T083602Z&X-Amz-Expires=300&X-Amz-Signature=d715864bb6a641d6d6cce00409f3563e8bf328ecf25ba2a96e43314961f129a7&X-Amz-SignedHeaders=host&actor_id=168409733&key_id=0&repo_id=793423595</video>
+<video><source src="https://github-production-user-asset-6210df.s3.amazonaws.com/168409733/340231630-017aee8a-a4a9-4ef6-8e6c-1dd4cd968a34.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240617%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240617T083602Z&X-Amz-Expires=300&X-Amz-Signature=d715864bb6a641d6d6cce00409f3563e8bf328ecf25ba2a96e43314961f129a7&X-Amz-SignedHeaders=host&actor_id=168409733&key_id=0&repo_id=793423595" type="video/mp4"></video>
 
 
 <br>
