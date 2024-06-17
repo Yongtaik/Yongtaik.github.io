@@ -36,7 +36,7 @@ https://
 > 노이즈 데이터 출처[[3]](#3-httpszenodoorgrecords1227121w2wuvnj7tui)
 
 
-</>
+<br>
 
 ### 데이터셋 상세 
 음성 데이터는 5초 이내의 남자 목소리(영어) 203개와 여자 목소리(영어) 204개를 합쳐서 총 407개의 클린한로 사용,<br>
@@ -53,43 +53,43 @@ test set : 120개
 <br>
 **total : 6105개**
 
-</br>
-</br>
+<br>
+<br>
 
 ### 데이터셋 합성 과정
-</br>
+<br>
 <img src="https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/9f8182c1-37fa-46f2-9320-52cbc7326e13">
 
-</br>
-</br>
-</br>
+<br>
+<br>
+<br>
 
 ### SNR
 노이즈 합성 비율을 결정하기 위한 음성과 노이즈의 대비값
-</br>
-</br>
+<br>
+<br>
 <img width="381" alt="image" src="https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/aa161b58-f87b-4277-be50-0e9d57686681">
-</br>
-</br>
-</br>
-A<sub>signal</sub>와 A<sub>noise</sub>는 wav파일의 진폭의 제곱합의 RMS(평균 제곱근)값입니다.</br>
+<br>
+<br>
+<br>
+A<sub>signal</sub>와 A<sub>noise</sub>는 wav파일의 진폭의 제곱합의 RMS(평균 제곱근)값입니다.<br>
 SNR 값을 입력하여 위의 식에서 도출된 값을 아래 식에 대입해 노이즈의 RMS를 구합니다. 
-</br>
-</br>
+<br>
+<br>
 <img width="304" alt="스크린샷 2024-06-15 오전 4 26 12" src="https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/c52ef434-b406-4e44-9518-a9354d528e0b">
-</br>
-</br>
-</br>
+<br>
+<br>
+<br>
 SNR값을 이용하여 구한 노이즈와 원본 노이즈의 비율을 아래와 같은 식으로 구하여 그 비율을 노이즈에 곱한 뒤, 음성과 더해서 노이즈가 있는 음성을 합성합니다. 이때, 음성 파일과 노이즈 파일의 길이가 다른 경우 더 긴 파일을 짧은 길이의 파일의 길이에 맞춥니다.
-</br>
-</br>
+<br>
+<br>
 <img width="268" alt="스크린샷 2024-06-15 오전 4 39 07" src="https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/cf4bc267-ccdb-4457-89dd-cef538913a12">
-</br>
+<br>
 <img width="733" alt="image" src="https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/b6114d0c-c5ec-4e81-93ff-5d1753567cfc">
-</br>
-</br>
-</br>
-</br>
+<br>
+<br>
+<br>
+<br>
 
 
 
