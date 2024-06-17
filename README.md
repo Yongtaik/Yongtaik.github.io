@@ -280,6 +280,208 @@ Clean Phase Batch Shape: (20, 16, 481, 401)
 <br>
 
 ### 3. 4 모델 생성
+오디오의 지역적인 특성과 시계열적인 특성을 모두 고려할 수 있도록 CNN과 LSTM이 결합된 형태의 모델을 선정하였습니다. 이 때 모델이 매우 Deep 한 형태를 띄기에, Gradient Vanishing 문제를 해결할 필요가 있습니다. 또한 음성으로부터 노이즈의 제거는 **(음성+노이즈) – (노이즈)** 의 큰 형태를 띄기에, 잔차 학습이 매우 효과적일 것이라 판단하였습니다. 따라서 마치 U-net 구조처럼 Encoder와 Decoder 부분 사이에 Skip Connection이 있는 형태를 차용하고, 가운데에 LSTM을 배치함으로써, CNN을 통해 얻어진 피처맵의 시간적 특성을 고려하는 영역을 추가했습니다.
+<br>
+<br>
+![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/49a61f0e-7dd4-4aa7-b8e8-e6f5e4451260)
+<br>
+<br>
+참고한 논문에선 LSTM 레이어가 2개 사용되지만, 본 프로젝트에선 자원적 한계로 인해 1개의 레이어를 사용했습니다. 게다가 논문에 제시되었던 사이즈보다 더욱 선명한 상태의 오디오 스펙트로그램을 사용하기 때문에 LSTM은 제시된 것보다 큰 차원을 받아들여야 합니다. 따라서 미리 선정한 데이터의 형태에 맞게 수정하였고, 최종적으로 사용한 모델의 클래스와 포워딩 구문은 다음과 같습니다.
+
+<br>
+
+**모델 CRN 클래스 선언 :**
+```python
+import torch.nn as nn
+import torch.nn.functional as F
+import torch
+
+class CRN(nn.Module):
+    def __init__(self):
+        super(CRN, self).__init__()
+        # Encoder
+        self.conv1 = nn.Conv2d(in_channels=1, out_channels=16, kernel_size=(2, 3), stride=(1, 2))
+        self.bn1 = nn.BatchNorm2d(num_features=16)
+        self.conv2 = nn.Conv2d(in_channels=16, out_channels=32, kernel_size=(2, 3), stride=(1, 2))
+        self.bn2 = nn.BatchNorm2d(num_features=32)
+        self.conv3 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=(2, 3), stride=(1, 2))
+        self.bn3 = nn.BatchNorm2d(num_features=64)
+        self.conv4 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=(2, 3), stride=(1, 2))
+        self.bn4 = nn.BatchNorm2d(num_features=128)
+        self.conv5 = nn.Conv2d(in_channels=128, out_channels=256, kernel_size=(2, 3), stride=(1, 2))
+        self.bn5 = nn.BatchNorm2d(num_features=256)
+
+        # LSTM
+        self.LSTM1 = nn.LSTM(input_size=3584, hidden_size=3584, num_layers=1, batch_first=True)
+
+        # Decoder
+        self.convT1 = nn.ConvTranspose2d(in_channels=512, out_channels=128, kernel_size=(2, 3), stride=(1, 2), padding=(1,0))
+        self.bnT1 = nn.BatchNorm2d(num_features=128)
+        self.convT2 = nn.ConvTranspose2d(in_channels=256, out_channels=64, kernel_size=(2, 3), stride=(1, 2), padding=(1,0))
+        self.bnT2 = nn.BatchNorm2d(num_features=64)
+        self.convT3 = nn.ConvTranspose2d(in_channels=128, out_channels=32, kernel_size=(2, 3), stride=(1, 2), padding=(1,0))
+        self.bnT3 = nn.BatchNorm2d(num_features=32)
+        self.convT4 = nn.ConvTranspose2d(in_channels=64, out_channels=16, kernel_size=(2, 3), stride=(1, 2), padding=(1, 0),
+                                         output_padding=(0,1)) # 기존 frequency bins만큼 맞추기 위해 패딩
+        self.bnT4 = nn.BatchNorm2d(num_features=16)
+        self.convT5 = nn.ConvTranspose2d(in_channels=32, out_channels=1, kernel_size=(2, 3), stride=(1, 2), padding=(1,0))
+        self.bnT5 = nn.BatchNorm2d(num_features=1)
+
+```
+<br>
+
+**포워딩 :**
+```python
+    def forward(self, x):
+        
+        
+        p1d = (0,0,1,0) # 시간 차원을 보존하기 위해 제로패딩 배열
+        print(f"input : {x.shape}")
+        if (x.ndim ==3): 
+            x.unsqueeze_(1)
+        else :
+            pass # [batch, num_channels(1), T, F] 
+        print(f"unsqueezed input : {x.shape}")
+        x_en = F.pad(x, p1d)
+        x1 = F.elu(self.bn1(self.conv1(x_en)))
+        print(f"Conv1 Output : {x1.shape}")
+        
+        x1_en = F.pad(x1, p1d)
+        x2 = F.elu(self.bn2(self.conv2(x1_en)))
+        print(f"Conv2 Output : {x2.shape}")
+        
+        x2_en = F.pad(x2, p1d)
+        x3 = F.elu(self.bn3(self.conv3(x2_en)))
+        print(f"Conv3 Output : {x3.shape}")
+        
+        x3_en = F.pad(x3, p1d)
+        x4 = F.elu(self.bn4(self.conv4(x3_en)))
+        print(f"Conv4 Output : {x4.shape}")
+        
+        x4_en = F.pad(x4, p1d)
+        x5 = F.elu(self.bn5(self.conv5(x4_en)))
+        print(f"Conv5 Output : {x5.shape}")
+        # reshape
+        out5 = x5.permute(0, 2, 1, 3)
+        print(f"permuted Output : {out5.shape}")
+        out5 = out5.reshape(out5.size()[0], out5.size()[1], -1)
+        print(f"reshaped Output for lstm Input : {out5.shape}")
+        # lstm
+
+        lstm, (hn, cn) = self.LSTM1(out5)
+        # reshape
+        output = lstm.reshape(lstm.size()[0], lstm.size()[1], 256, -1)
+        output = output.permute(0, 2, 1, 3)
+        print(f"lstm output : {output.shape}")
+        # ConvTrans
+        res = torch.cat((output, x5), 1)
+        print(f"concat lstm : {res.shape}")
+        res_en = F.pad(res, p1d)
+        res1 = F.elu(self.bnT1(self.convT1(res_en)))
+        print(f"deConv1 out : {res1.shape}")
+        res1 = torch.cat((res1, x4), 1)
+        print(f"concat deConv1 : {res1.shape}")
+        res1_en = F.pad(res1, p1d)
+        res2 = F.elu(self.bnT2(self.convT2(res1_en)))
+        
+        print(f"deConv2 out : {res2.shape}")
+        res2 = torch.cat((res2, x3), 1)
+        print(f"concat deConv2 : {res2.shape}")
+        res2_en = F.pad(res2, p1d)
+        res3 = F.elu(self.bnT3(self.convT3(res2_en)))
+        print(f"deConv3 out : {res3.shape}")
+        res3 = torch.cat((res3, x2), 1)
+        print(f"concat deConv3 : {res3.shape}")
+        
+        res3_en = F.pad(res3, p1d)
+        res4 = F.elu(self.bnT4(self.convT4(res3_en)))
+        print(f"deConv4 out : {res4.shape}")
+        res4 = torch.cat((res4, x1), 1)
+        print(f"concat deConv4 : {res4.shape}")
+        # (B, channel(1), T. F)
+        
+        res4_en = F.pad(res4, p1d)
+        res5 = F.relu(self.bnT5(self.convT5(res4_en)))
+        print(f"deConv5 out : {res5.shape}")
+        print(f"Squeezed deConv5 out : {res5.squeeze().shape}")
+        return res5.squeeze()
+
+```
+<br>
+모델은 CNN에서 시간적 정보를 손실하지 않으면서 LSTM에 전송해줄 수 있도록 하며, LSTM은 CNN의 Encoder 부분에서 얻어진 Feature map 차원과 주파수 차원이 곱해진 reshaped input을 받아 처리할 수 있도록 합니다. 이 때 시간축의 개수가 보존되기에, LSTM은 피처맵들의 시계열적 특성만을 효과적으로 고려할 수 있습니다. Deconvolution 은 Encoder의 Convolution Network와 Skip Connection으로 연결되어 있어, 잔차를 학습할 수 있도록 합니다.
+<br>
+<br>
+모델이 들어온 인풋을 받아들이고 학습하기 위해선 Loss와 Optimizer가 필요합니다.
+<br>
+Loss는 데이터셋의 음성만 있는 정답 라벨의 Amplitude Spectrogram과 Predicted Amplitude Spectrogram의 차이를 나타내도록 합니다. 여기서 저희는 노이즈 제거를 수행하는 모델이기에, 지워야 할 곳에 대한 [Batch Size, Frequency Bins, Number of Frames(T)] 사이즈의 바이너리 마스크를 만들고, 이를 Predicted Amplitude Spectrograms, 정답 Amplitude Spectrograms 두 곳 각각에 곱해주어 이 둘의 차이를 줄일 수 있도록 학습시킵니다.
+<br>
+
+```python
+import torch
+from torch.nn.utils.rnn import pad_sequence
+
+def loss_function(target, ipt):
+        print("clean shape in loss.py : ", ipt.shape) # B x F x T
+        print("enhanced shape in loss.py : ", target.shape) # B x F x T
+        return torch.nn.functional.mse_loss(target, ipt)
+
+```
+<br>
+Optimizer는 Adam을 사용하며 모델을 GPU에 불러와 초기화합니다.
+<br>
+
+```python
+import torch
+import matplotlib.pyplot as plt
+# 모델 초기화
+model = CRN().to(device="cuda")
+
+# 옵티마이저
+optimizer = torch.optim.Adam(
+        params=model.parameters(),
+        lr=0.006,
+        betas = [0.9, 0.999])
+
+```
+<br>
+
+**모델 학습 코드:**
+<br>
+
+```python
+# Put data to target device
+device = "cuda"
+epochs = 4
+batch_mixed = torch.from_numpy(batches_mixed_amp).to(device)
+batch_clean = torch.from_numpy(batches_clean_amp).to(device)
+
+for epoch in range(epochs):
+    model.train()
+    for i in range(20):
+        ## Training
+        
+        # 1. Forward pass
+        prediction_amp_spt = model(batch_mixed[i].permute(0,2,1)) # 시간축과 주파수축을 전환
+        
+        # 2. Calculate loss/accuracy
+        prediction_amp_spt = prediction_amp_spt.permute(0,2,1)
+        loss = loss_function(prediction_amp_spt, batch_clean[i])
+        # 3. Optimizer zero grad
+        optimizer.zero_grad()
+    
+        # 4. Loss backwards
+        loss.backward()
+    
+        # 5. Optimizer step
+        optimizer.step()
+    
+    ### Testing
+    model.eval()
+    with torch.inference_mode():
+        librosa.display.specshow(librosa.amplitude_to_db(prediction_amp_spt[0].detach().cpu().numpy(), ref=np.max), sr=16000, hop_length=hop_length, x_axis='time', y_axis='log')
+        print(f"Epoch: {epoch} | Loss: {loss:.5f}")
+
+```
 
 <br>
 <br>
@@ -298,4 +500,5 @@ Clean Phase Batch Shape: (20, 16, 481, 401)
 ###### [[3]](#2-datasets) https://zenodo.org/records/1227121#.W2wUVNj7TUI
 ###### [[4]](#3-methodology) Zhao, Han, et al. “Convolutional-Recurrent Neural Networks for Speech Enhancement.” arXiv.org, 2 May 2018, https://arxiv.org/abs/1805.00579
 ###### [[5]](#오디오-데이터-처리) Tirronen, Saska, et al. “The Effect of the MFCC Frame Length in Automatic Voice Pathology Detection.” Journal of Voice, Apr. 2022, https://doi.org/10.1016/j.jvoice.2022.03.021.
+###### [[6]](#3-4-모델-생성) Tan, Ke and Deliang Wang. “A Convolutional Recurrent Neural Network for Real-Time Speech Enhancement.” Interspeech (2018). https://www.semanticscholar.org/paper/A-Convolutional-Recurrent-Neural-Network-for-Speech-Tan-Wang/d24d6db5beeab2b638dc0658e1510f633086b601
 * Kumar, A., Florêncio, D., & Zhang, C. (2015). Linear Prediction Based Speech Enhancement without Delay. arXiv preprint arXiv:1507.05717. Retrieved from https://arxiv.org/abs/1507.05717
