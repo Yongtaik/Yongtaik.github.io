@@ -26,7 +26,7 @@ https://
 
 ## 1. Proposal
 ### Motivation
-최근 GPT-4o 공개 등으로 보여지듯, 인공지능 기술의 발전으로 음성 인식 시스템의 정확도와 효율성이 크게 향상되었습니다. 그러나 저음질 음성 데이터는 여전히 높은 오류율을 초래하여 음성 인식 시스템의 성능을 저해하고 있습니다. 가정에서도 산업현장에서도 음성 기반 시스템의 활용도가 증가함에 따라, 음질 개선의 필요성은 더욱 커지고 있습니다. 저음질 음성을 고음질로 변환하는 기술은 음성 데이터의 품질을 개선하여 음성 인식의 정확도를 높일 수 있습니다. 또한 기존에 사용할 수 없었던 저품질의 데이터를 활용가능하도록 변환시키면서 발생하는 양적인 기여 또한 무시할 수 없습니다. 결론적으로, 저음질 음성을 고음질로 변환하는 기술 개발은 음성 인식 시스템의 상용화와 효율적인 운영에 중요한 기여를 할 수 있습니다.
+최근 GPT-4o 공개 등으로 보여지듯, 인공지능 기술의 발전으로 음성 인식 시스템의 정확도와 효율성이 크게 향상되었습니다. 그러나 저음질 음성 데이터는 여전히 높은 오류율을 초래하여 음성 인식 시스템의 성능을 저해하고 있습니다. 가정에서도 산업현장에서도 음성 기반 시스템의 활용도가 증가함에 따라, 음질 개선의 필요성은 더욱 커지고 있습니다. 저음질 음성을 고음질로 변환하는 기술은 데이터 자체의 질적 향상으로 음성 인식의 정확도를 높일 수 있습니다. 또한 기존에 사용할 수 없었던 저품질의 데이터를 활용가능하도록 변환시키면서 발생하는 양적인 기여 또한 무시할 수 없습니다. 결론적으로, 저음질 음성을 고음질로 변환하는 기술 개발은 음성 인식 시스템의 상용화와 효율적인 운영에 중요한 기여를 할 수 있습니다.
 
 
 ## 2. Datasets
@@ -120,12 +120,12 @@ CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network
 <br>
 오디오 데이터는 시간에 따라 Amplitude가 명시된 1차원 벡터입니다.
 <br>
-$Waveforms.shape = (1 ,Sample Rate (F_s) × Time (sec))$
+![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/b669d192-8fe9-4c65-ae0f-ed59d03ea327)
 <br>
 <br>
 이를 STFT를 거쳐서 변환시켜준 결과는 다음과 같습니다.
 <br>
-$Spectrogram.shape = (2 ,Frames,Frequency Bins)$
+![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/4a50a381-f1bc-482f-92fe-ef3f8967029f)
 <br>
 <br>
 이때 첫글자의 '2'는 2차원임을 의미합니다. 이는 푸리에 변환을 거치면서 크기라고 할 수 있는 Amplitude Spectrogram과, 위상이라 할 수 있는 Phase Spectrogram 두 가지로 고유한 정보를 가지게 되기 때문입니다. 이는 마치 채널 수가 두 개인 이미지 텐서를 처리하는 것과 같은 것으로 볼 수 있습니다.
@@ -145,7 +145,8 @@ $Spectrogram.shape = (2 ,Frames,Frequency Bins)$
 <br>
 파이썬의 모델에서 오디오를 텐서 형태로 다루기 위해서는 STFT 작업이 필수적입니다. 여기서 오디오의 샘플레이트를 F<sub>s</sub>라고 하고 FFT의 size를 N이라고 한다면 주파수 축의 해상도는 다음과 같습니다.
 <br>
-$Frequency Resolution(F_∆ )=F_s/N$
+![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/fd4c9d7f-3074-4649-92f5-689a3e7d2e38)
+
 <br>
 <br>
 위의 F<sub>Δ</sub> 가 낮을수록 주파수를 더욱 정밀하게 표현할 수 있으며, 이는 곧 파이썬 환경에서 데이터의 세로축을 얼마나 촘촘하게 표현할 수 있는지를 의미합니다.
@@ -638,6 +639,10 @@ print(f"Average PESQ score: {average_pesq}")
 ###### [[7]](#4-evaluation--analysis) [KTword 정보통신기술용어 해설] http://www.ktword.co.kr/test/view/view.php?no=2751
 ###### [[8]](#4-evaluation--analysis) https://github.com/ludlows/PESQ
 
-
-
+<br>
+**코드 및 이론 등 전반적인 참조**
+<br>
+* https://github.com/haoxiangsnr/A-Convolutional-Recurrent-Neural-Network-for-Real-Time-Speech-Enhancement/tree/master
+* Hwang, Seo-Rim, et al. “Performance Comparison Evaluation of Speech Enhancement Using Various Loss Functions.” The Journal of the Acoustical Society of Korea, vol. 40, no. 2, Mar. 2021, pp. 176–82. https://doi.org/10.7776/ask.2021.40.2.176.
+* Park, Daniel S., et al. “SpecAugment: A Simple Data Augmentation Method for Automatic Speech Recognition.” Interspeech 2019, Sept. 2019, pp. 2613–17, https://doi.org/10.21437/Interspeech.2019-2680.
 * Kumar, A., Florêncio, D., & Zhang, C. (2015). Linear Prediction Based Speech Enhancement without Delay. arXiv preprint arXiv:1507.05717. Retrieved from https://arxiv.org/abs/1507.05717
