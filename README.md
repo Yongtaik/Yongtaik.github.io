@@ -11,7 +11,9 @@
 전기공학과 | 최태환 | 데이터셋 변환 및 전처리 | middler@hanyang.ac.kr
 
 # Youtube Link
-https://
+[유튜브 링크](https://www.youtube.com/watch?v=nlbh3Ro6JkA)
+<br>
+https://www.youtube.com/watch?v=nlbh3Ro6JkA
 
 
 ## Index
