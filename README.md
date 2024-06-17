@@ -106,10 +106,15 @@ CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network
 
 <br>
 <br>
-<br>
 
 ### 오디오 데이터 처리
 
+해당 모델은 오디오 데이터를 텐서 형태로 불러와야 합니다. 따라서 먼저 오디오를 시간적으로 작게 쪼개어 각각을 푸리에 변환한 2D 형태의 이미지로 변환합니다. 이 때 사용하는 기법을 **Short-time Fourier Transform (STFT)** 이라고 합니다.
+오디오 데이터는 시간에 따라 Amplitude가 명시된 1차원 벡터입니다.
+$Waveforms.shape= (1 ,Sample Rate (F_s) × Time (sec))$
+이를 STFT를 거쳐서 변환시켜준 결과는 다음과 같습니다.
+$Spectrogram.shape= (2 ,Frames,Frequency Bins)$
+이때 첫글자의 2는 2차원임을 의미합니다. 이는 푸리에 변환을 거치면서 크기라고 할 수 있는 Amplitude Spectrogram과, 위상이라 할 수 있는 Phase Spectrogram 두 가지로 고유한 정보를 가지게 되기 때문입니다. 이는 마치 채널 수가 두개인 이미지 텐서를 처리하는 것과 같은 것으로 볼 수 있습니다.
 
 
 ## 4. Evaluation & Analysis
