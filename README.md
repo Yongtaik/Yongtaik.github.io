@@ -12,20 +12,20 @@ https://
 
 
 ## Index
-[1. Proposal](##1.proposal)\
-[2. Datasets](##2.datasets)\
-[3. Methodology](##3.methodology)\
+[1. Proposal](##-1.-proposal)\
+[2. Datasets](##-2.-datasets)\
+[3. Methodology](##-3.-methodology)\
 4. Evaluation & Analysis
 5. Conclusion
 6. Reference
 
 
-## 1.Proposal
+## 1. Proposal
 ### Motivation
 최근 GPT-4o 공개 등으로 보여지듯, 인공지능 기술의 발전으로 음성 인식 시스템의 정확도와 효율성이 크게 향상되었습니다. 그러나 저음질 음성 데이터는 여전히 높은 오류율을 초래하여 음성 인식 시스템의 성능을 저해하고 있습니다. 가정에서도 산업현장에서도 음성 기반 시스템의 활용도가 증가함에 따라, 음질 개선의 필요성은 더욱 커지고 있습니다. 저음질 음성을 고음질로 변환하는 기술은 음성 데이터의 품질을 개선하여 음성 인식의 정확도를 높일 수 있습니다. 또한 기존에 사용할 수 없었던 저품질의 데이터를 활용가능하도록 변환시키면서 발생하는 양적인 기여 또한 무시할 수 없습니다. 결론적으로, 저음질 음성을 고음질로 변환하는 기술 개발은 음성 인식 시스템의 상용화와 효율적인 운영에 중요한 기여를 할 수 있습니다.
 
 
-## 2.Datasets
+## 2. Datasets
 잡음 제거 학습을 위해 노이즈가 있는 음성과 노이즈가 없는 클린한 음성의 데이터가 쌍으로 필요합니다. 하지만 이러한 데이터 쌍을 구하기 쉽지 않기 때문에 두가지 음성을 합성하여 데이터 쌍을 만드는 방식을 사용했습니다. 데이터 합성 방식은 https://engineering.linecorp.com/ko/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python 를 참조하였습니다. 음성데이터는 CMU ARCTIC Databases의 영어로 된 남자와 여자 음성파일(wav) 407개를 사용하였고 노이즈는 DEMAND의 서로 다른 종류인 생활 소음의 파일(wav) 5개를 사용하고 소음이 들어간 정도인 SNR(음성 대비 노이즈 비)을 3가지로 나누어 총 407X5X3(6105)개의 노이즈가 섞인 음성 데이터를 만들었습니다. 
 
 아래의 그림은 데이터 만드는 전체 과정을 나타냈습니다.
