@@ -97,8 +97,12 @@ SNR값을 이용하여 구한 노이즈와 원본 노이즈의 비율을 아래�
 
 ## 3. Methodology
 ### 사용 모델: CRNN이란? 
-CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network)과 RNN(Recurrent Neural Network)의 장점을 결합한 신경망의 한 유형입니다. CRNN은 먼저 CNN을 활용하여 이미지나 스펙트로그램과 같은 입력 데이터에서 공간적 특징을 계층적으로 추출합니다. 이렇게 추출된 특징을 RNN이 순차적으로 처리하여 시간적 종속성을 캡처함으로써, 시간에 따른 연속적인 정보를 효과적으로 다룰 수 있습니다. 이 아키텍처는 두가지 모델을 결합한만큼 지역적 특징 패턴과 장기적인 종속성을 모두 학습할 수 있다는 점에서 유리합니다. CRNN은 특히 음성 및 오디오 처리와 같은 응용 분야에서 사용되며, 입력 신호의 공간적 및 시간적 특성을 모델링하여 음성 향상과 같은 작업에서 음성의 명료성과 품질을 향상시키는 데 효과적입니다
 ![CRNN_structure](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/be8a8361-7a76-4e1c-a980-2af27740b9f2)
+CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network)과 RNN(Recurrent Neural Network)의 장점을 결합한 신경망의 한 유형입니다. CRNN은 먼저 CNN을 활용하여 이미지나 스펙트로그램과 같은 입력 데이터에서 공간적 특징을 계층적으로 추출합니다. 이렇게 추출된 특징을 RNN이 순차적으로 처리하여 시간적 종속성을 캡처함으로써, 시간에 따른 연속적인 정보를 효과적으로 다룰 수 있습니다. 이 아키텍처는 두가지 모델을 결합한만큼 지역적 특징 패턴과 장기적인 종속성을 모두 학습할 수 있다는 점에서 유리합니다. CRNN은 특히 음성 및 오디오 처리와 같은 응용 분야에서 사용되며, 입력 신호의 공간적 및 시간적 특성을 모델링하여 음성 향상과 같은 작업에서 음성의 명료성과 품질을 향상시키는 데 효과적입니다
+<br>
+저희가 참고한 논문에서는 이러한 모델을 주파수와 시간으로 표현된 2D 스팩트로그램 이미지를 활용하는 CNN 영역, 양방향 RNN 영역, 그리고 fully-connected 된 예측 영역의 세가지 단계로 표현했습니다.
+
+
 
 ## 4. Evaluation & Analysis
 
@@ -110,4 +114,5 @@ CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network
 ###### [[1]](#2-datasets) https://engineering.linecorp.com/ko/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python
 ###### [[2]](#2-datasets) http://festvox.org/cmu_arctic/
 ###### [[3]](#2-datasets) https://zenodo.org/records/1227121#.W2wUVNj7TUI
+###### [[4]](#3-methodology) https://arxiv.org/abs/1805.00579
 * Kumar, A., Florêncio, D., & Zhang, C. (2015). Linear Prediction Based Speech Enhancement without Delay. arXiv preprint arXiv:1507.05717. Retrieved from https://arxiv.org/abs/1507.05717
