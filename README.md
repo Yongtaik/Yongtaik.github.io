@@ -124,13 +124,41 @@ $Spectrogram.shape = (2 ,Frames,Frequency Bins)$
 <br>
 <br>
 이때 첫글자의 '2'는 2차원임을 의미합니다. 이는 푸리에 변환을 거치면서 크기라고 할 수 있는 Amplitude Spectrogram과, 위상이라 할 수 있는 Phase Spectrogram 두 가지로 고유한 정보를 가지게 되기 때문입니다. 이는 마치 채널 수가 두 개인 이미지 텐서를 처리하는 것과 같은 것으로 볼 수 있습니다.
+<br>
+<br>
+<br>
+![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/91a363a9-2e37-40e6-ae2a-ee56adc9c33d)
+<br>
+<br>
+모델은 위의 두가지 스펙트로그램 중 Amplitude Spectrogram을 예측하도록 설계하는 것이 일반적입니다. 이유는 Phase Spectrogram을 그 자체로 처리하여 복원하는 것은 매우 직관적이지 못한 데이터를 주기 때문입니다. 따라서 저희는 모델에 Amplitude Spectrogram을 포워딩 시켜, 목소리에서 노이즈의 주파수 정보만 제거된 Amplitude Spectrogram을 얻는 것을 목표로 합니다. 그 이후 모델에 통과하기 전 얻어진 Phase Spectrogram을 사용하여 Inverse STFT를 통해 다시 오디오로 복원하도록 합니다.
+<br>
+<br>
+<br>
 
+![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/c3d9bbb6-29c1-44a9-b9d4-48e33794b61d)
+<br>
+<br>
+파이썬의 모델에서 오디오를 텐서 형태로 다루기 위해서는 STFT 작업이 필수적입니다. 여기서 오디오의 샘플레이트를 F<sub>s</sub>라고 하고 FFT의 size를 N이라고 한다면 주파수 축의 해상도는 다음과 같습니다.
+<br>
+$Frequency Resolution(F_∆ )=F_s/N$
+<br>
+<br>
+위의 F<sub>Δ</sub> 가 낮을수록 주파수를 더욱 정밀하게 표현할 수 있으며, 이는 곧 파이썬 환경에서 데이터의 세로축을 얼마나 촘촘하게 표현할 수 있는지를 의미합니다.
+<br>
+<br>
+<br>
+![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/6473f2c4-010e-4382-979a-b7a26723ae23)
+<br>
+<br>
+STFT를 거친 모델은 출력한 위와 같은 이미지 데이터를 출력합니다. 이러한 결과물을 처리하여 오디오의 노이즈를 제거하는 것이 저희의 다운스트림 태스크이기 때문에, 데이터에 대한 세부적인 이해가 중요합니다.
+<br>
+오른쪽의 ‘Low FΔ‘ 이미지 하단에서 두 개의 주파수가 강하게 존재하고 있음이 확인되나, 왼쪽의 ‘High FΔ‘ 이미지에선 그러한 모습을 확인할 수 없습니다. 저희는 모델 학습 과정에서 오른쪽과 같이 명확한 이미지를 사용하는 것이, 목소리와 노이즈를 주파수적으로 구분하는 데에 있어 유리함을 논문을 통해서 확인했습니다.
 
 
 <br>
 <br>
 <br>
-
+<br>
 
 ## 4. Evaluation & Analysis
 
@@ -143,4 +171,5 @@ $Spectrogram.shape = (2 ,Frames,Frequency Bins)$
 ###### [[2]](#2-datasets) http://festvox.org/cmu_arctic/
 ###### [[3]](#2-datasets) https://zenodo.org/records/1227121#.W2wUVNj7TUI
 ###### [[4]](#3-methodology) Zhao, Han, et al. “Convolutional-Recurrent Neural Networks for Speech Enhancement.” arXiv.org, 2 May 2018, https://arxiv.org/abs/1805.00579
+###### [[5]](#3-methodology) Tirronen, Saska, et al. “The Effect of the MFCC Frame Length in Automatic Voice Pathology Detection.” Journal of Voice, Apr. 2022, https://doi.org/10.1016/j.jvoice.2022.03.021.
 * Kumar, A., Florêncio, D., & Zhang, C. (2015). Linear Prediction Based Speech Enhancement without Delay. arXiv preprint arXiv:1507.05717. Retrieved from https://arxiv.org/abs/1507.05717
