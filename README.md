@@ -284,6 +284,8 @@ Clean Phase Batch Shape: (20, 16, 481, 401)
 <br>
 <br>
 ![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/49a61f0e-7dd4-4aa7-b8e8-e6f5e4451260)
+
+> 이미지 및 개념 출처 [6](#6-tan-ke-and-deliang-wang-a-convolutional-recurrent-neural-network-for-real-time-speech-enhancement-interspeech-2018-httpswwwsemanticscholarorgpapera-convolutional-recurrent-neural-network-for-speech-tan-wangd24d6db5beeab2b638dc0658e1510f633086b601)
 <br>
 <br>
 참고한 논문에선 LSTM 레이어가 2개 사용되지만, 본 프로젝트에선 자원적 한계로 인해 1개의 레이어를 사용했습니다. 게다가 논문에 제시되었던 사이즈보다 더욱 선명한 상태의 오디오 스펙트로그램을 사용하기 때문에 LSTM은 제시된 것보다 큰 차원을 받아들여야 합니다. 따라서 미리 선정한 데이터의 형태에 맞게 수정하였고, 최종적으로 사용한 모델의 클래스와 포워딩 구문은 다음과 같습니다.
