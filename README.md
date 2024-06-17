@@ -37,20 +37,17 @@ https://
 
 추가적으로 소음이 들어간 정도인 SNR(음성 대비 노이즈 비)에 따라 3가지로 나누어 총 ~6105~(407x5x3)개의 노이즈가 섞인 음성 데이터를 만들었습니다. 
 
-데이터셋 합성 과정
+~데이터셋 합성 과정~
 </br>
 </br>
 ![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/9f8182c1-37fa-46f2-9320-52cbc7326e13)
 
-speech_synthesis.py는 음성을 노이즈를 SNR을 다르게 하여 노이즈를 합성하고 합성된 음성을 훈련할 음성이 있을 폴더에 저장하고 그에 맞는 레이블인 원래 클린한 음성을 레이블이 있을 폴더에 저장합니다. 
 </br>
 </br>
 </br>
 </br>
 ### SNR
-SNR은 노이즈 합성 비율을 결정하기 위한 음성과 노이즈의 대비값을 말하며 식은 다음과 같습니다. 
-</br>
-</br>
+노이즈 합성 비율을 결정하기 위한 음성과 노이즈의 대비값\
 <img width="381" alt="image" src="https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/aa161b58-f87b-4277-be50-0e9d57686681">
 </br>
 </br>
@@ -106,7 +103,7 @@ CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network
 
 
 ## 6. Reference
-###### [1](#2-datasets) https://engineering.linecorp.com/ko/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python
-###### [2](#2-datasets) http://festvox.org/cmu_arctic/
-###### [3](#2-datasets) https://zenodo.org/records/1227121#.W2wUVNj7TUI
+###### [[1]](#2-datasets) https://engineering.linecorp.com/ko/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python
+###### [[2]](#2-datasets) http://festvox.org/cmu_arctic/
+###### [[3]](#2-datasets) https://zenodo.org/records/1227121#.W2wUVNj7TUI
 * Kumar, A., Florêncio, D., & Zhang, C. (2015). Linear Prediction Based Speech Enhancement without Delay. arXiv preprint arXiv:1507.05717. Retrieved from https://arxiv.org/abs/1507.05717
