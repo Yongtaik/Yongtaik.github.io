@@ -51,12 +51,12 @@ valdation set : 1485개
 </br>
 test set : 120개
 </br>
--total : 6105개
+**total : 6105개**
 
 ### 데이터셋 합성 과정
 </br>
 </br>
-![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/9f8182c1-37fa-46f2-9320-52cbc7326e13)
+<img src="https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/9f8182c1-37fa-46f2-9320-52cbc7326e13">
 
 </br>
 </br>
