@@ -26,7 +26,7 @@ https://
 
 
 ## 2. Datasets
-잡음 제거 학습을 위해선 노이즈가 있는 음성과 노이즈가 없는 클린한 음성의 데이터가 쌍으로 필요합니다. 하지만 이러한 데이터 쌍을 구하기 쉽지 않기 때문에 두가지 음성을 합성하여 데이터 쌍을 만드는 방식을 사용했습니다.\
+잡음 제거 학습을 위해선 노이즈가 있는 음성과 노이즈가 없는 클린한 음성의 데이터가 쌍으로 필요합니다. 하지만 이러한 데이터 쌍을 구하기 쉽지 않기 때문에 두가지 음성을 합성하여 데이터 쌍을 만드는 방식을 사용했습니다.
 > 데이터 합성 방식 참조[[1]](#1-httpsengineeringlinecorpcomkoblogvoice-waveform-arbitrary-signal-to-noise-ratio-python)
 
 음성 데이터는 CMU ARCTIC Databases의 영어로 된 남자와 여자 음성파일(wav) 407개를 사용하였고 
@@ -36,13 +36,13 @@ https://
 > 노이즈 데이터 출처[[3]](#3-httpszenodoorgrecords1227121w2wuvnj7tui)
 
 추가적으로 소음이 들어간 정도인 SNR(음성 대비 노이즈 비)에 따라 3가지로 나누어 총 **6105**(407x5x3)개의 노이즈가 섞인 음성 데이터를 만들었습니다. 
+</br>
 
 **데이터셋 합성 과정**
 </br>
 </br>
 ![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/9f8182c1-37fa-46f2-9320-52cbc7326e13)
 
-</br>
 </br>
 </br>
 </br>
@@ -55,13 +55,11 @@ https://
 </br>
 </br>
 </br>
-</br>
 A<sub>signal</sub>와 A<sub>noise</sub>는 wav파일의 진폭의 제곱합의 RMS(평균 제곱근)값입니다.</br>
-SNR 값을 입력하여 위의 식에서 도출된 아래의 식을 이용해 노이즈의 RMS를 구합니다. 
+SNR 값을 입력하여 위의 식에서 도출된 값을 아래 식에 대입해 노이즈의 RMS를 구합니다. 
 </br>
 </br>
 <img width="304" alt="스크린샷 2024-06-15 오전 4 26 12" src="https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/c52ef434-b406-4e44-9518-a9354d528e0b">
-</br>
 </br>
 </br>
 </br>
