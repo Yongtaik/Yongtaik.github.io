@@ -47,8 +47,9 @@ https://
 </br>
 </br>
 ### SNR
-
-노이즈 합성 비율을 결정하기 위한 음성과 노이즈의 대비값</br>
+노이즈 합성 비율을 결정하기 위한 음성과 노이즈의 대비값
+</br>
+</br>
 <img width="381" alt="image" src="https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/aa161b58-f87b-4277-be50-0e9d57686681">
 </br>
 </br>
