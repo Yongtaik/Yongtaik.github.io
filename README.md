@@ -534,9 +534,11 @@ for i in range(1):
 <br>
 <br>
 
+
 **결과물**
 <br>
-clean10_with_ch01_snr15.mp4: 기존 잡음과 음성이 합쳐져 있는 원본 파일
+
+[clean10_with_ch01_snr15.mp4: 기존 잡음과 음성이 합쳐져 있는 원본 파일](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/86ee3b88-4c42-4698-ba79-0eb40ad02c51)
 <br>
 
 https://github-production-user-asset-6210df.s3.amazonaws.com/168409733/340231610-9a381f2b-1080-49c5-a51b-af819ad32086.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240617%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240617T083614Z&X-Amz-Expires=300&X-Amz-Signature=fe994aeddc6b6ada6041854165b3bb818c7e55e30d41a1f7e2e5b7bc3f67b37b&X-Amz-SignedHeaders=host&actor_id=168409733&key_id=0&repo_id=793423595
