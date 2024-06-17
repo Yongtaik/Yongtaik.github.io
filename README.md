@@ -26,11 +26,17 @@ https://
 
 
 ## 2. Datasets
-잡음 제거 학습을 위해 노이즈가 있는 음성과 노이즈가 없는 클린한 음성의 데이터가 쌍으로 필요합니다. 하지만 이러한 데이터 쌍을 구하기 쉽지 않기 때문에 두가지 음성을 합성하여 데이터 쌍을 만드는 방식을 사용했습니다.\
-> 데이터 합성 방식 참조 링크[[1]](#1-httpsengineeringlinecorpcomkoblogvoice-waveform-arbitrary-signal-to-noise-ratio-python)\
-음성데이터는 CMU ARCTIC Databases의 영어로 된 남자와 여자 음성파일(wav) 407개를 사용하였고 노이즈는 DEMAND의 서로 다른 종류인 생활 소음의 파일(wav) 5개를 사용하고 소음이 들어간 정도인 SNR(음성 대비 노이즈 비)을 3가지로 나누어 총 407X5X3(6105)개의 노이즈가 섞인 음성 데이터를 만들었습니다. 
+잡음 제거 학습을 위해선 노이즈가 있는 음성과 노이즈가 없는 클린한 음성의 데이터가 쌍으로 필요합니다. 하지만 이러한 데이터 쌍을 구하기 쉽지 않기 때문에 두가지 음성을 합성하여 데이터 쌍을 만드는 방식을 사용했습니다.\
+> 데이터 합성 방식 참조 링크[[1]](#1-httpsengineeringlinecorpcomkoblogvoice-waveform-arbitrary-signal-to-noise-ratio-python)
 
-아래의 그림은 데이터 만드는 전체 과정을 나타냈습니다.
+음성 데이터는 CMU ARCTIC Databases의 영어로 된 남자와 여자 음성파일(wav) 407개를 사용하였고 
+
+
+노이즈 데이터는 DEMAND의 서로 다른 종류인 생활 소음의 파일(wav) 5개를 사용했습니다.
+
+소음이 들어간 정도인 SNR(음성 대비 노이즈 비)을 3가지로 나누어 총 407X5X3(6105)개의 노이즈가 섞인 음성 데이터를 만들었습니다. 
+
+데이터셋 합성 과정
 </br>
 </br>
 ![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/9f8182c1-37fa-46f2-9320-52cbc7326e13)
@@ -100,4 +106,6 @@ CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network
 
 ## 6. Reference
 ###### [1] https://engineering.linecorp.com/ko/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python
+###### [2] http://festvox.org/cmu_arctic/
+###### [3] https://zenodo.org/records/1227121#.W2wUVNj7TUI
 * Kumar, A., Florêncio, D., & Zhang, C. (2015). Linear Prediction Based Speech Enhancement without Delay. arXiv preprint arXiv:1507.05717. Retrieved from https://arxiv.org/abs/1507.05717
