@@ -15,6 +15,10 @@ https://
 [1. Proposal](#1-proposal)\
 [2. Datasets](#2-datasets)\
 [3. Methodology](#3-methodology)\
+  [사용 모델: CRNN이란?](#사용-모델-crnn이란)\
+  [오디오 데이터 처리](#오디오-데이터-처리)\
+  [오디오 데이터 처리 코드](#오디오-데이터-처리-코드)\
+  [모델 생성](#모델-생성)\
 [4. Evaluation & Analysis](#4-evaluation--analysis)\
 [5. Conclusion](#5-conclusion)\
 [6. Reference](#6-reference)
@@ -107,6 +111,7 @@ CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network
 
 <br>
 <br>
+<br>
 
 ### 오디오 데이터 처리
 
@@ -165,6 +170,113 @@ FFT 사이즈를 높이면 주파수 해상도는 증가하지만, 시간축의 
 <br>
 저희의 데이터셋은 오디오 데이터의 샘플레이트(Fs)가 16000 이기 때문에, 이를 기준으로 위와 결과를 반영하여 FFT_size = 960, Hop_length = 160 으로 설정하였습니다. 
 
+<br>
+<br>
+<br>
+
+### 오디오 데이터 처리 코드
+오디오 (4초길이, 샘플레이트=16000) 데이터들을 불러와 Array 형태로 변환하는 코드입니다.
+<br>
+'''python
+import os
+import librosa
+import numpy as np
+import torch
+# 파일 경로 설정
+label_folder = 'dataset/label'
+mixed_folder = 'dataset/mixed'
+batch_size = 8
+sampling_rate = 16000
+audio_length = 4 * sampling_rate  # 4초의 길이
+# 파일 리스트 가져오기
+label_files = sorted([os.path.join(label_folder, f) for f in os.listdir(label_folder) if f.endswith('.wav')])
+mixed_files = sorted([os.path.join(mixed_folder, f) for f in os.listdir(mixed_folder) if f.endswith('.wav')])
+# STFT 파라미터 설정
+n_fft = 960
+hop_length = 160
+def load_audio(file_path, sr=sampling_rate):
+    y, _ = librosa.load(file_path, sr=sr)
+    y = librosa.util.fix_length(y, size=audio_length)  # 길이를 4초로 맞추기
+    return y
+def compute_stft(y, n_fft=n_fft, hop_length=hop_length):
+    stft = librosa.stft(y, n_fft=n_fft, hop_length=hop_length)
+    amp = np.abs(stft)
+    phase = np.angle(stft)
+    return amp, phase
+# 배치 리스트 초기화
+batches_mixed_amp = []
+batches_clean_amp = []
+batches_mixed_phase = []
+batches_clean_phase = []
+# 파일을 순차적으로 처리하여 배치로 나누기
+for i in range(0, len(label_files), batch_size):
+    mixed_amp_list = []
+    mixed_phase_list = []
+    clean_amp_list = []
+    clean_phase_list = []
+    
+    for j in range(batch_size):
+        if i + j >= len(label_files):
+            break
+            
+        label_file = label_files[i + j]
+        mixed_file = mixed_files[i + j]
+        
+        # 오디오 파일 로드
+        clean_audio = load_audio(label_file)
+        mixed_audio = load_audio(mixed_file)
+        
+        # STFT 계산
+        mixed_amp, mixed_phase = compute_stft(mixed_audio)
+        clean_amp, clean_phase = compute_stft(clean_audio)
+        
+        mixed_amp_list.append(mixed_amp)
+        mixed_phase_list.append(mixed_phase)
+        clean_amp_list.append(clean_amp)
+        clean_phase_list.append(clean_phase)
+    
+    # 리스트를 넘파이 배열로 변환하고 형태 조정
+    mixed_amp_batch = np.array(mixed_amp_list)
+    mixed_phase_batch = np.array(mixed_phase_list)
+    clean_amp_batch = np.array(clean_amp_list)
+    clean_phase_batch = np.array(clean_phase_list)
+    
+    # 배치를 리스트에 추가
+    batches_mixed_amp.append(mixed_amp_batch)
+    batches_clean_amp.append(clean_amp_batch)
+    batches_mixed_phase.append(mixed_phase_batch)
+    batches_clean_phase.append(clean_phase_batch)
+
+# 넘파이 배열 형태로 변환
+batches_mixed_amp = np.array(batches_mixed_amp)
+batches_clean_amp = np.array(batches_clean_amp)
+batches_mixed_phase = np.array(batches_mixed_phase)
+batches_clean_phase = np.array(batches_clean_phase)
+
+# 출력 형태 확인
+print(f"Mixed Amplitude Batch Shape: {batches_mixed_amp.shape}")  
+print(f"Clean Amplitude Batch Shape: {batches_clean_amp.shape}")  
+print(f"Mixed Phase Batch Shape: {batches_mixed_phase.shape}")    
+print(f"Clean Phase Batch Shape: {batches_clean_phase.shape}")  
+
+'''
+<br>
+**출력 결과**
+<br>
+'''
+Mixed Amplitude Batch Shape: (20, 16, 481, 401)
+Clean Amplitude Batch Shape: (20, 16, 481, 401)
+Mixed Phase Batch Shape: (20, 16, 481, 401)
+Clean Phase Batch Shape: (20, 16, 481, 401)
+'''
+[세로 길이 481 x 가로 길이 401]의 이미지가 성공적으로 불러와진 것을 확인했습니다.
+<br>
+여기서 모델의 인풋으로 Mixed Amplitude Batch가 사용됩니다. 이에 대한 이유는 다음 모델 부분에서 설명하겠습니다.
+<br>
+<br>
+<br>
+
+### 모델 생성
 
 <br>
 <br>
