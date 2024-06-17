@@ -58,7 +58,6 @@ test set : 120개
 
 ### 데이터셋 합성 과정
 </br>
-</br>
 <img src="https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/9f8182c1-37fa-46f2-9320-52cbc7326e13">
 
 </br>
@@ -90,9 +89,7 @@ SNR값을 이용하여 구한 노이즈와 원본 노이즈의 비율을 아래�
 </br>
 </br>
 </br>
-
-
-
+</br>
 
 
 
