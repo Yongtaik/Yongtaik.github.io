@@ -537,13 +537,15 @@ for i in range(1):
 <br>
 clean10_with_ch01_snr15.mp4: 기존 잡음과 음성이 합쳐져 있는 원본 파일
 <br>
-https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/9a381f2b-1080-49c5-a51b-af819ad32086
+[https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/9a381f2b-1080-49c5-a51b-af819ad32086](https://github-production-user-asset-6210df.s3.amazonaws.com/168409733/340231630-017aee8a-a4a9-4ef6-8e6c-1dd4cd968a34.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240617%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240617T083602Z&X-Amz-Expires=300&X-Amz-Signature=d715864bb6a641d6d6cce00409f3563e8bf328ecf25ba2a96e43314961f129a7&X-Amz-SignedHeaders=host&actor_id=168409733&key_id=0&repo_id=793423595)
 
 <br>
 <br>
 predicted_audio_1.mp4: 모델을 통과한 결과물입니다
 <br>
-https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/017aee8a-a4a9-4ef6-8e6c-1dd4cd968a34
+
+https://github-production-user-asset-6210df.s3.amazonaws.com/168409733/340231610-9a381f2b-1080-49c5-a51b-af819ad32086.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240617%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240617T083614Z&X-Amz-Expires=300&X-Amz-Signature=fe994aeddc6b6ada6041854165b3bb818c7e55e30d41a1f7e2e5b7bc3f67b37b&X-Amz-SignedHeaders=host&actor_id=168409733&key_id=0&repo_id=793423595
+
 
 <br>
 <br>
@@ -593,6 +595,7 @@ average_pesq = np.mean([score for score in pesq_scores if score is not None])
 print(f"Average PESQ score: {average_pesq}")
 ```
 <br>
+
 ![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/dbb49d0d-cfc6-489e-be84-cddca09bc081)
 <br>
 
