@@ -14,13 +14,11 @@ https://
 ## Index
 [1. Proposal](#1-proposal)\
 [2. Datasets](#2-datasets)\
-[3. Methodology](#3-methodology)
-<br>  
-[사용 모델: CRNN이란?](#사용-모델-crnn이란)
-<br>  
-[오디오 데이터 처리](#오디오-데이터-처리)
-<br>  [오디오 데이터 처리 코드](#오디오-데이터-처리-코드)\
-<br>  [모델 생성](#모델-생성)\
+[3. Methodology](#3-methodology)\
+    [사용 모델: CRNN이란?](#사용-모델-crnn이란 "    ")\
+    [오디오 데이터 처리](#오디오-데이터-처리 "    ")\
+    [오디오 데이터 처리 코드](#오디오-데이터-처리-코드 "    ")\
+    [모델 생성](#모델-생성 "    ")\
 [4. Evaluation & Analysis](#4-evaluation--analysis)\
 [5. Conclusion](#5-conclusion)\
 [6. Reference](#6-reference)
@@ -265,12 +263,14 @@ print(f"Clean Phase Batch Shape: {batches_clean_phase.shape}")
 <br>
 **출력 결과**
 <br>
+
 ```
 Mixed Amplitude Batch Shape: (20, 16, 481, 401)
 Clean Amplitude Batch Shape: (20, 16, 481, 401)
 Mixed Phase Batch Shape: (20, 16, 481, 401)
 Clean Phase Batch Shape: (20, 16, 481, 401)
 ```
+
 [세로 길이 481 x 가로 길이 401]의 이미지가 성공적으로 불러와진 것을 확인했습니다.
 <br>
 여기서 모델의 인풋으로 Mixed Amplitude Batch가 사용됩니다. 이에 대한 이유는 다음 모델 부분에서 설명하겠습니다.
