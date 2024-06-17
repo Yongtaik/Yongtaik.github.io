@@ -35,9 +35,9 @@ https://
 노이즈 데이터는 DEMAND의 서로 다른 종류인 생활 소음의 파일(wav) 5개를 사용했습니다.
 > 노이즈 데이터 출처[[3]](#3-httpszenodoorgrecords1227121w2wuvnj7tui)
 
-추가적으로 소음이 들어간 정도인 SNR(음성 대비 노이즈 비)에 따라 3가지로 나누어 총 ~6105~(407x5x3)개의 노이즈가 섞인 음성 데이터를 만들었습니다. 
+추가적으로 소음이 들어간 정도인 SNR(음성 대비 노이즈 비)에 따라 3가지로 나누어 총 **6105**(407x5x3)개의 노이즈가 섞인 음성 데이터를 만들었습니다. 
 
-~데이터셋 합성 과정~
+**데이터셋 합성 과정**
 </br>
 </br>
 ![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/9f8182c1-37fa-46f2-9320-52cbc7326e13)
@@ -47,7 +47,8 @@ https://
 </br>
 </br>
 ### SNR
-노이즈 합성 비율을 결정하기 위한 음성과 노이즈의 대비값\
+
+노이즈 합성 비율을 결정하기 위한 음성과 노이즈의 대비값</br>
 <img width="381" alt="image" src="https://github.com/Yongtaik/Yongtaik.github.io/assets/77503751/aa161b58-f87b-4277-be50-0e9d57686681">
 </br>
 </br>
