@@ -7,9 +7,12 @@
 경영학과 유영찬 reynoldred@hanyang.ac.kr   
 전기공학과 최태환 middler@hanyang.ac.kr
 
+# Youtube Link
+https://
+
 
 ## Index
-1. Proposal
+1. Proposal (## 1.Proposal)
 2. Datasets
 3. Methodology
 4. Evaluation & Analysis
