@@ -27,7 +27,7 @@ https://
 
 ## 2. Datasets
 잡음 제거 학습을 위해 노이즈가 있는 음성과 노이즈가 없는 클린한 음성의 데이터가 쌍으로 필요합니다. 하지만 이러한 데이터 쌍을 구하기 쉽지 않기 때문에 두가지 음성을 합성하여 데이터 쌍을 만드는 방식을 사용했습니다.\
-(데이터 합성 방식 참조 링크[[1]](#1-httpsengineeringlinecorpcomkoblogvoice-waveform-arbitrary-signal-to-noise-ratio-python))\
+> 데이터 합성 방식 참조 링크[[1]](#1-httpsengineeringlinecorpcomkoblogvoice-waveform-arbitrary-signal-to-noise-ratio-python)
 음성데이터는 CMU ARCTIC Databases의 영어로 된 남자와 여자 음성파일(wav) 407개를 사용하였고 노이즈는 DEMAND의 서로 다른 종류인 생활 소음의 파일(wav) 5개를 사용하고 소음이 들어간 정도인 SNR(음성 대비 노이즈 비)을 3가지로 나누어 총 407X5X3(6105)개의 노이즈가 섞인 음성 데이터를 만들었습니다. 
 
 아래의 그림은 데이터 만드는 전체 과정을 나타냈습니다.
