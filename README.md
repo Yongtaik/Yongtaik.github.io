@@ -99,6 +99,7 @@ SNR값을 이용하여 구한 노이즈와 원본 노이즈의 비율을 아래�
 ### 사용 모델: CRNN이란? 
 ![CRNN_structure](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/be8a8361-7a76-4e1c-a980-2af27740b9f2)
 <br>
+<br>
 CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network)과 RNN(Recurrent Neural Network)의 장점을 결합한 신경망의 한 유형입니다. CRNN은 먼저 CNN을 활용하여 이미지나 스펙트로그램과 같은 입력 데이터에서 공간적 특징을 계층적으로 추출합니다. 이렇게 추출된 특징을 RNN이 순차적으로 처리하여 시간적 종속성을 캡처함으로써, 시간에 따른 연속적인 정보를 효과적으로 다룰 수 있습니다. 이 아키텍처는 두가지 모델을 결합한만큼 지역적 특징 패턴과 장기적인 종속성을 모두 학습할 수 있다는 점에서 유리합니다. CRNN은 특히 음성 및 오디오 처리와 같은 응용 분야에서 사용되며, 입력 신호의 공간적 및 시간적 특성을 모델링하여 음성 향상과 같은 작업에서 음성의 명료성과 품질을 향상시키는 데 효과적입니다
 <br>
 저희가 참고한 논문에서는 이러한 모델을 주파수와 시간으로 표현된 2D 스팩트로그램 이미지를 활용하는 CNN 영역, 양방향 RNN 영역, 그리고 fully-connected 된 예측 영역의 세가지 단계로 표현했습니다.
@@ -110,11 +111,25 @@ CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network
 ### 오디오 데이터 처리
 
 해당 모델은 오디오 데이터를 텐서 형태로 불러와야 합니다. 따라서 먼저 오디오를 시간적으로 작게 쪼개어 각각을 푸리에 변환한 2D 형태의 이미지로 변환합니다. 이 때 사용하는 기법을 **Short-time Fourier Transform (STFT)** 이라고 합니다.
+<br>
+<br>
 오디오 데이터는 시간에 따라 Amplitude가 명시된 1차원 벡터입니다.
-$Waveforms.shape= (1 ,Sample Rate (F_s) × Time (sec))$
+<br>
+$Waveforms.shape = (1 ,Sample Rate (F_s) × Time (sec))$
+<br>
+<br>
 이를 STFT를 거쳐서 변환시켜준 결과는 다음과 같습니다.
-$Spectrogram.shape= (2 ,Frames,Frequency Bins)$
+<br>
+$Spectrogram.shape = (2 ,Frames,Frequency Bins)$
+<br>
+<br>
 이때 첫글자의 2는 2차원임을 의미합니다. 이는 푸리에 변환을 거치면서 크기라고 할 수 있는 Amplitude Spectrogram과, 위상이라 할 수 있는 Phase Spectrogram 두 가지로 고유한 정보를 가지게 되기 때문입니다. 이는 마치 채널 수가 두개인 이미지 텐서를 처리하는 것과 같은 것으로 볼 수 있습니다.
+
+
+
+<br>
+<br>
+<br>
 
 
 ## 4. Evaluation & Analysis
