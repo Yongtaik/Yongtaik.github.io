@@ -15,10 +15,10 @@ https://
 [1. Proposal](#1-proposal)\
 [2. Datasets](#2-datasets)\
 [3. Methodology](#3-methodology)\
-    [사용 모델: CRNN이란?](#사용-모델-crnn이란 "    ")\
-    [오디오 데이터 처리](#오디오-데이터-처리 "    ")\
-    [오디오 데이터 처리 코드](#오디오-데이터-처리-코드 "    ")\
-    [모델 생성](#모델-생성 "    ")\
+[3-1) 사용 모델: CRNN이란?](#사용-모델-crnn이란)\
+[3-2) 오디오 데이터 처리](#오디오-데이터-처리)\
+[3-3) 오디오 데이터 처리 코드](#오디오-데이터-처리-코드)\
+[3-4) 모델 생성](#모델-생성)\
 [4. Evaluation & Analysis](#4-evaluation--analysis)\
 [5. Conclusion](#5-conclusion)\
 [6. Reference](#6-reference)
@@ -100,7 +100,7 @@ SNR값을 이용하여 구한 노이즈와 원본 노이즈의 비율을 아래�
 
 
 ## 3. Methodology
-### 사용 모델: CRNN이란? 
+### 3-1) 사용 모델: CRNN이란? 
 ![CRNN_structure](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/be8a8361-7a76-4e1c-a980-2af27740b9f2)
 <br>
 <br>
@@ -113,7 +113,7 @@ CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network
 <br>
 <br>
 
-### 오디오 데이터 처리
+### 2. 오디오 데이터 처리
 
 해당 모델은 오디오 데이터를 텐서 형태로 불러와야 합니다. 따라서 먼저 오디오를 시간적으로 작게 쪼개어 각각을 푸리에 변환한 2D 형태의 이미지로 변환합니다. 이 때 사용하는 기법을 **Short-time Fourier Transform (STFT)** 이라고 합니다.
 <br>
