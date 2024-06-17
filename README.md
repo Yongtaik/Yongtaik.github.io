@@ -114,5 +114,5 @@ CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network
 ###### [[1]](#2-datasets) https://engineering.linecorp.com/ko/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python
 ###### [[2]](#2-datasets) http://festvox.org/cmu_arctic/
 ###### [[3]](#2-datasets) https://zenodo.org/records/1227121#.W2wUVNj7TUI
-###### [[4]](#3-methodology) Zhao, Han, et al. “Convolutional-Recurrent Neural Networks for Speech Enhancement.” arXiv.org, 2 May 2018, arxiv.org/abs/1805.00579.
+###### [[4]](#3-methodology) Zhao, Han, et al. “Convolutional-Recurrent Neural Networks for Speech Enhancement.” arXiv.org, 2 May 2018, arxiv.org/abs/1805.00579
 * Kumar, A., Florêncio, D., & Zhang, C. (2015). Linear Prediction Based Speech Enhancement without Delay. arXiv preprint arXiv:1507.05717. Retrieved from https://arxiv.org/abs/1507.05717
