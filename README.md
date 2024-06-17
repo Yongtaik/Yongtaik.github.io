@@ -2,10 +2,13 @@
 # Title: CNN-RNN 하이브리드 모델을 이용한 보이스 노이즈 제거 및 음질 향상
 
 # Members & Roles
-자원환경공학과 최용석 cys425922@gmail.com   
-경영학과 구현태 kht999123@gmail.com   
-경영학과 유영찬 reynoldred@hanyang.ac.kr   
-전기공학과 최태환 middler@hanyang.ac.kr
+
+전공 | 이름 | 역할 | 이메일
+---|---|---|---
+자원환경공학과 | 최용석 | 코드 정리, 최종 보고서 작성 | cys425922@gmail.com   
+경영학과 | 구현태 | 주요 코드 작성, 모델 구동 | kht999123@gmail.com   
+경영학과 | 유영찬 | GitHub 관리, 발표 및 출처 정리 | reynoldred@hanyang.ac.kr   
+전기공학과 | 최태환 | 데이터셋 변환 및 전처리 | middler@hanyang.ac.kr
 
 # Youtube Link
 https://
