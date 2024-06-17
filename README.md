@@ -641,11 +641,14 @@ print(f"Average PESQ score: {average_pesq}")
 ###### [[6]](#3-4-모델-생성) Tan, Ke and Deliang Wang. “A Convolutional Recurrent Neural Network for Real-Time Speech Enhancement.” Interspeech (2018). https://www.semanticscholar.org/paper/A-Convolutional-Recurrent-Neural-Network-for-Speech-Tan-Wang/d24d6db5beeab2b638dc0658e1510f633086b601
 ###### [[7]](#4-evaluation--analysis) [KTword 정보통신기술용어 해설] http://www.ktword.co.kr/test/view/view.php?no=2751
 ###### [[8]](#4-evaluation--analysis) https://github.com/ludlows/PESQ
+###### [[9]](#5-conclusion) Hwang, Seo-Rim, et al. “Performance Comparison Evaluation of Speech Enhancement Using Various Loss Functions.” The Journal of the Acoustical Society of Korea, vol. 40, no. 2, Mar. 2021, pp. 176–82. https://doi.org/10.7776/ask.2021.40.2.176.
+###### [[10]](#5-conclusion) Park, Daniel S., et al. “SpecAugment: A Simple Data Augmentation Method for Automatic Speech Recognition.” Interspeech 2019, Sept. 2019, pp. 2613–17, https://doi.org/10.21437/Interspeech.2019-2680.
 
 <br>
 **코드 및 이론 등 전반적인 참조**
 <br>
+
 * https://github.com/haoxiangsnr/A-Convolutional-Recurrent-Neural-Network-for-Real-Time-Speech-Enhancement/tree/master
-* Hwang, Seo-Rim, et al. “Performance Comparison Evaluation of Speech Enhancement Using Various Loss Functions.” The Journal of the Acoustical Society of Korea, vol. 40, no. 2, Mar. 2021, pp. 176–82. https://doi.org/10.7776/ask.2021.40.2.176.
-* Park, Daniel S., et al. “SpecAugment: A Simple Data Augmentation Method for Automatic Speech Recognition.” Interspeech 2019, Sept. 2019, pp. 2613–17, https://doi.org/10.21437/Interspeech.2019-2680.
+<br>
+
 * Kumar, A., Florêncio, D., & Zhang, C. (2015). Linear Prediction Based Speech Enhancement without Delay. arXiv preprint arXiv:1507.05717. Retrieved from https://arxiv.org/abs/1507.05717
