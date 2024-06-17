@@ -97,5 +97,5 @@ CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network
 
 
 ## 6. Reference
-* ######https://engineering.linecorp.com/ko/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python
+###### [1] https://engineering.linecorp.com/ko/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python
 * Kumar, A., Florêncio, D., & Zhang, C. (2015). Linear Prediction Based Speech Enhancement without Delay. arXiv preprint arXiv:1507.05717. Retrieved from https://arxiv.org/abs/1507.05717
