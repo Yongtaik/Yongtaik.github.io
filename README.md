@@ -30,10 +30,10 @@ https://
 > 데이터 합성 방식 참조[[1]](#1-httpsengineeringlinecorpcomkoblogvoice-waveform-arbitrary-signal-to-noise-ratio-python)
 
 음성 데이터는 CMU ARCTIC Databases의 영어로 된 남자와 여자 음성파일(wav) 407개를 사용하였고 
-> 음성 데이터 출처[[1]](#2-httpfestvoxorgcmu_arctic)
+> 음성 데이터 출처[[2]](#2-httpfestvoxorgcmu_arctic)
 
 노이즈 데이터는 DEMAND의 서로 다른 종류인 생활 소음의 파일(wav) 5개를 사용했습니다.
-> 노이즈 데이터 출처[[1]](#3-httpszenodoorgrecords1227121w2wuvnj7tui)
+> 노이즈 데이터 출처[[3]](#3-httpszenodoorgrecords1227121w2wuvnj7tui)
 
 추가적으로 소음이 들어간 정도인 SNR(음성 대비 노이즈 비)에 따라 3가지로 나누어 총 ~6105~(407x5x3)개의 노이즈가 섞인 음성 데이터를 만들었습니다. 
 
@@ -106,7 +106,7 @@ CRNN(Convolutional Recurrent Neural Network)은 CNN(Convolutional Neural Network
 
 
 ## 6. Reference
-###### [1] https://engineering.linecorp.com/ko/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python
-###### [2] http://festvox.org/cmu_arctic/
-###### [3] https://zenodo.org/records/1227121#.W2wUVNj7TUI
+###### [1](#2-datasets) https://engineering.linecorp.com/ko/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python
+###### [2](#2-datasets) http://festvox.org/cmu_arctic/
+###### [3](#2-datasets) https://zenodo.org/records/1227121#.W2wUVNj7TUI
 * Kumar, A., Florêncio, D., & Zhang, C. (2015). Linear Prediction Based Speech Enhancement without Delay. arXiv preprint arXiv:1507.05717. Retrieved from https://arxiv.org/abs/1507.05717
