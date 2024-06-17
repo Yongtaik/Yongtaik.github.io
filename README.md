@@ -123,7 +123,7 @@ $Waveforms.shape = (1 ,Sample Rate (F_s) × Time (sec))$
 $Spectrogram.shape = (2 ,Frames,Frequency Bins)$
 <br>
 <br>
-이때 첫글자의 2는 2차원임을 의미합니다. 이는 푸리에 변환을 거치면서 크기라고 할 수 있는 Amplitude Spectrogram과, 위상이라 할 수 있는 Phase Spectrogram 두 가지로 고유한 정보를 가지게 되기 때문입니다. 이는 마치 채널 수가 두개인 이미지 텐서를 처리하는 것과 같은 것으로 볼 수 있습니다.
+이때 첫글자의 '2'는 2차원임을 의미합니다. 이는 푸리에 변환을 거치면서 크기라고 할 수 있는 Amplitude Spectrogram과, 위상이라 할 수 있는 Phase Spectrogram 두 가지로 고유한 정보를 가지게 되기 때문입니다. 이는 마치 채널 수가 두 개인 이미지 텐서를 처리하는 것과 같은 것으로 볼 수 있습니다.
 
 
 
