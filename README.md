@@ -430,7 +430,7 @@ def loss_function(target, ipt):
 
 ```
 <br>
-Optimizer는 Adam을 사용하며 모델을 GPU에 불러와 초기화합니다.
+Optimizer는 Adam을 사용하며, 모델을 GPU에 불러와 초기화합니다.
 <br>
 
 ```python
@@ -491,7 +491,76 @@ for epoch in range(epochs):
 <br>
 
 ## 4. Evaluation & Analysis
+epoch가 한번 진행되었을 때 모델 아웃풋인 amplitude_spectrogram에서 샘플 1개를 불러와 정답 레이블과 비교하였습니다.
+<br>
+![image](https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/5bac101c-c09c-4a27-b4df-db9ce819441b)
+<br>
+<br>
+Prediction 이미지를 볼 때, 노이즈로 추정되는 부분이 검정색으로 제거되었음을 확인할 수 있습니다. Ground Truth와 비교하였을 때, 음성을 과하게 제거한 부분이 존재하나 이는 에포크를 늘려 조금씩 보완해 나갈 수 있습니다.
 
+<br>
+<br>
+해당 모델은 음성에 추가된 노이즈의 제거를 목표로 하며, 오디오 데이터는 실제로 들어보면서 얻는 직관이 적지 않기 때문에 최종적으로 사람이 들을 수 있는 결과물을 출력하는 것이 중요합니다. 
+<br>
+다음은 오디오 파일을 불러와 모델을 통과시키고 파일로 저장해주는 인퍼런스 코드입니다. 위에서 미리 불러온 트레이닝 텐서를 파라미터 학습없이 통과시켜 얻은 Amplitude Spectrogram과, 기존의 Phase Spectrogram을 이용해 ISTFT를 수행한 뒤, 들을 수 있는 Waveform 형태로 저장합니다. 
+<br>
+
+```python
+import torch
+import numpy as np
+import librosa
+import soundfile as sf
+import os
+def istft(magnitude, phase, n_fft=n_fft, hop_length=hop_length):
+    complex_spectrum = magnitude * np.exp(1j * phase)
+    y = librosa.istft(complex_spectrum, hop_length=hop_length)
+    return y
+batch_mixed = torch.from_numpy(batches_mixed_amp).to(device)
+mixed_phase = batches_mixed_phase[0]
+
+for i in range(1):
+    model.eval()
+    prediction_amp_spt = model(batch_mixed[i].permute(0,2,1)) # 시간축과 주파수축을 전환
+    prediction_amp_spt = prediction_amp_spt.permute(0,2,1).cpu().detach().numpy()
+    with torch.no_grad():
+        for j in range(8):
+            # 1. Forward pass
+            predicted_audio = istft(prediction_amp_spt[j], mixed_phase[j])
+            output_file = f'dataset/enhanced/predicted_audio_{j+1}.wav'
+            sf.write(output_file, predicted_audio, samplerate=16000)
+            print(f'Saved {output_file}')
+
+```
+<br>
+<br>
+**결과물**
+<br>
+clean10_with_ch01_snr15.mp4: 기존 잡음과 음성이 합쳐져 있는 원본 파일
+<br>
+https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/9a381f2b-1080-49c5-a51b-af819ad32086
+
+<br>
+<br>
+predicted_audio_1.mp4: 모델을 통과한 결과물입니다
+<br>
+https://github.com/Yongtaik/Yongtaik.github.io/assets/168409733/017aee8a-a4a9-4ef6-8e6c-1dd4cd968a34
+
+<br>
+<br>
+<br>
+
+Evaluation Metric으로는 PESQ를 사용합니다. PESQ 스코어는 -0.5 ~ 4.5 범위의 값을 출력하며, 두 가지 소리가 얼마나 서로 유사한지를 가리킵니다. 높은 값일수록 두 소리가 유사하다고 할 수 있습니다. 저희는 PESQ 스코어에서 Wideband PESQ를 사용합니다. test셋을 사용하여 Average PESQ 스코어를 출력합니다.
+
+
+
+
+```python
+
+```
+
+<br>
+<br>
+<br>
 
 ## 5. Conclusion
 
@@ -503,4 +572,9 @@ for epoch in range(epochs):
 ###### [[4]](#3-methodology) Zhao, Han, et al. “Convolutional-Recurrent Neural Networks for Speech Enhancement.” arXiv.org, 2 May 2018, https://arxiv.org/abs/1805.00579
 ###### [[5]](#오디오-데이터-처리) Tirronen, Saska, et al. “The Effect of the MFCC Frame Length in Automatic Voice Pathology Detection.” Journal of Voice, Apr. 2022, https://doi.org/10.1016/j.jvoice.2022.03.021.
 ###### [[6]](#3-4-모델-생성) Tan, Ke and Deliang Wang. “A Convolutional Recurrent Neural Network for Real-Time Speech Enhancement.” Interspeech (2018). https://www.semanticscholar.org/paper/A-Convolutional-Recurrent-Neural-Network-for-Speech-Tan-Wang/d24d6db5beeab2b638dc0658e1510f633086b601
+###### [[7]](#4-evaluation--analysis) [KTword 정보통신기술용어 해설] http://www.ktword.co.kr/test/view/view.php?no=2751
+###### [[8]](#4-evaluation--analysis) https://github.com/ludlows/PESQ
+
+
+
 * Kumar, A., Florêncio, D., & Zhang, C. (2015). Linear Prediction Based Speech Enhancement without Delay. arXiv preprint arXiv:1507.05717. Retrieved from https://arxiv.org/abs/1507.05717
